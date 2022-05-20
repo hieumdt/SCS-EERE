@@ -25,3 +25,13 @@ python main.py --seed 1234 --dataset HiEve --roberta_type roberta_large --best_p
 ## License
 
 All work contained in this package is licensed under the Apache License, Version 2.0.
+
+# Reference
+Bibtex:
+```
+@article{trong2022selecting,
+  title={Selecting Optimal Context Sentences for Event-Event Relation Extraction},
+  author={Trong, Hieu Man Duc and Trung, Nghia Ngo and Van Ngo, Linh and Nguyen, Thien Huu},
+  year={2022}
+}
+```
