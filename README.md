@@ -14,8 +14,8 @@ docker build -t hieumdt/ie_env -f information-extraction-env.dockerfile .
 ```
 python main.py --seed <your_seed> --dataset <datataset> --roberta_type <roberta_type> --best_path <path_to_save_model> --log_file <log> --bs <batch_size>
 ```
-dataset chooses from HiEve, MATRES, TBD, TDD_man, TDD_auto \n
-roberta_type chooses from roberta_base, roberta_large
+- dataset chooses from HiEve, MATRES, TBD, TDD_man, TDD_auto
+- roberta_type chooses from roberta_base, roberta_large
 3. Example commands:
 Training HiEve
 ```
