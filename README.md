@@ -29,7 +29,8 @@ Training HiEve
 ```
 python main.py --seed 1741 --dataset HiEve --roberta_type roberta_large --best_path /rst_HiEve/ --log_file HiEve_result.txt --bs 16
 ```
-
+Note \
+Need to ensure the minimal number of sentences of the doc is always larger than the number of selected sentence.
 ## License
 
 All work contained in this package is licensed under the Apache License, Version 2.0.
