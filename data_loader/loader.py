@@ -105,30 +105,34 @@ def loader(dataset, min_ns):
 
         ctx_augm = []
         ctx_augm_mask = []
+        _augm_emb = []
         for ids in ctx_id_augm:
             ids = set(ids)
             sent = []
             for id in ids:
                 sent = sent + my_dict["sentences"][id]["roberta_subword_to_ID"][1:]
             sent = [0] + sent
-            pad, mask = padding(sent, max_sent_len=256)
+            pad, mask = padding(sent, max_sent_len=512)
+            _augm_emb.append(sent_encoder.encode(pad, mask, is_ctx=True))
             ctx_augm.append(pad)
             ctx_augm_mask.append(mask)
-        # print(len(ctx_augm))
-        _augm_emb = sent_encoder.encode(ctx_augm, ctx_augm_mask, is_ctx=True)
+        _augm_emb = torch.cat(_augm_emb, dim=0)
+        if len(ctx_augm) == 0:
+            _augm_emb = []
         _ctx_augm_emb = {}
         for i in range(len(ctx_id_augm)):
-            # print(_augm_emb[i].size())
             _ctx_augm_emb[ctx_id_augm[i]] = _augm_emb[i]
 
         doc = []
         doc_mask = []
+        doc_emb = []
         for sent_id in list(range(len( my_dict["sentences"]))):
             sent = my_dict["sentences"][sent_id]["roberta_subword_to_ID"]
-            pad, mask = padding(sent, max_sent_len=256)
+            pad, mask = padding(sent, max_sent_len=512)
+            doc_emb.append(sent_encoder.encode(pad, mask))
             doc.append(pad)
             doc_mask.append(mask)
-        doc_emb = sent_encoder.encode(doc, doc_mask)
+        doc_emb = torch.cat(doc_emb, dim=0)
 
         sent_ev = defaultdict(list)
         sent_ev_ids = defaultdict(list)

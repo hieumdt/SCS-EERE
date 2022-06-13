@@ -1,0 +1,78 @@
+---------------------------HiEve----------------------
+{
+    's_hidden_dim': 256, 
+    's_mlp_dim': 512, 
+    'p_mlp_dim': 512, 
+    'epoches': 5, 
+    'warming_epoch': 1, 
+    'num_ctx_select': 2, 
+    's_lr': 5e-05, 
+    'b_lr': 1.5e-05, 
+    'm_lr': 5e-05, 
+    'b_lr_decay_rate': 0.5, 
+    'word_drop_rate': 0.05, 
+    'task_reward': 'logit', 
+    'perfomance_reward_weight': 0.7, 
+    'ctx_sim_reward_weight': 0.01, 
+    'knowledge_reward_weight': 0.7, 
+    'seed': 524
+}
+---------------------------MATRES---------------------
+{
+    's_hidden_dim': 512, 
+    's_mlp_dim': 512, 
+    'p_mlp_dim': 1024, 
+    'epoches': 7, 
+    'warming_epoch': 1, 
+    'num_ctx_select': 3, 
+    's_lr': 0.0001, 
+    'b_lr': 7e-06, 
+    'm_lr': 5e-05, 
+    'b_lr_decay_rate': 0.5, 
+    'word_drop_rate': 0.05, 
+    'task_reward': 'logit', 
+    'perfomance_reward_weight': 0.7, 
+    'ctx_sim_reward_weight': 0.003, 
+    'knowledge_reward_weight': 0.7, 
+    'fn_activate': 'tanh', 
+    'seed': 1741
+}
+---------------------------TBD------------------------
+---------------------------TDD_man--------------------
+{
+    's_hidden_dim': 256, 
+    's_mlp_dim': 512, 
+    'p_mlp_dim': 768, 
+    'epoches': 3, 
+    'warming_epoch': 1, 
+    'num_ctx_select': 5, 
+    's_lr': 5e-05, 
+    'b_lr': 1.5e-05, 
+    'm_lr': 5e-05, 
+    'b_lr_decay_rate': 0.5, 
+    'word_drop_rate': 0.05, 
+    'task_reward': 'logit', 
+    'perfomance_reward_weight': 0.7, 
+    'ctx_sim_reward_weight': 0.03, 
+    'knowledge_reward_weight': 0.7, 
+    'seed': 1741
+}
+---------------------------TDD_auto-------------------
+{
+    's_hidden_dim': 256, 
+    's_mlp_dim': 512, 
+    'p_mlp_dim': 768, 
+    'epoches': 3, 
+    'warming_epoch': 0,  
+    'num_ctx_select': 5, 
+    's_lr': 0.0001, 
+    'b_lr': 1e-05, 
+    'm_lr': 3e-05, 
+    'b_lr_decay_rate': 0.7, 
+    'word_drop_rate': 0.05, 
+    'task_reward': 'logit', 
+    'perfomance_reward_weight': 0.5, 
+    'ctx_sim_reward_weight': 0.01, 
+    'knowledge_reward_weight': 0.5, 
+    'seed': 1741
+}

@@ -4,22 +4,30 @@
 This repo contains our PyTorch implementation for the paper [Selecting Optimal Context Sentences for Event-Event Relation Extraction](https://www.aaai.org/AAAI22Papers/AAAI-3912.ManH.pdf). 
 
 
-## event-relation
+## SCS-EERE
 
 1. Create and activate a new environment:
 ```
 docker build -t hieumdt/ie_env -f information-extraction-env.dockerfile .
 ```
-2. Train model:
+2. Prepare data\
+Download the desired corpus (HiEve, MATRES, TDD) and put it in folder ```.\datasets```\
+Download [numberbatch w2v](https://github.com/commonsense/conceptnet-numberbatch) and move it to folder ```.\datasets```
+```
+wget https://conceptnet.s3.amazonaws.com/downloads/2019/numberbatch/numberbatch-en-19.08.txt.gz
+gunzip numberbatch-en-19.08.txt.gz
+mv numberbatch-en-19.08.txt.gz ./datasets
+```
+3. Train model:
 ```
 python main.py --seed <your_seed> --dataset <datataset> --roberta_type <roberta_type> --best_path <path_to_save_model> --log_file <log> --bs <batch_size>
 ```
-- dataset chooses from HiEve, MATRES, TBD, TDD_man, TDD_auto
+- dataset chooses from HiEve, MATRES, TDD_man, TDD_auto
 - roberta_type chooses from roberta_base, roberta_large
-3. Example commands:
+4. Example commands:
 Training HiEve
 ```
-python main.py --seed 1234 --dataset HiEve --roberta_type roberta_large --best_path /rst_HiEve/ --log_file HiEve_result.txt --bs 16
+python main.py --seed 1741 --dataset HiEve --roberta_type roberta_large --best_path /rst_HiEve/ --log_file HiEve_result.txt --bs 16
 ```
 
 ## License
