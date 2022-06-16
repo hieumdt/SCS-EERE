@@ -16,7 +16,7 @@ Download [numberbatch w2v](https://github.com/commonsense/conceptnet-numberbatch
 ```
 wget https://conceptnet.s3.amazonaws.com/downloads/2019/numberbatch/numberbatch-en-19.08.txt.gz
 gunzip numberbatch-en-19.08.txt.gz
-mv numberbatch-en-19.08.txt.gz ./datasets
+mv numberbatch-en-19.08.txt ./datasets
 ```
 3. Train model:
 ```
