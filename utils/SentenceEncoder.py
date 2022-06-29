@@ -14,8 +14,8 @@ class SentenceEncoder():
     def __init__(self, roberta_type) -> None:
         super().__init__()
         self.roberta_type = roberta_type
-        if os.path.exists("./pretrained_models/models/{}".format(roberta_type)):
-            encoder = AutoModel.from_pretrained("./pretrained_models/models/{}".format(roberta_type), output_hidden_states=True)
+        if os.path.exists("/vinai/hieumdt/pretrained_models/models/{}".format(roberta_type)):
+            encoder = AutoModel.from_pretrained("/vinai/hieumdt/pretrained_models/models/{}".format(roberta_type), output_hidden_states=True)
         else:
             encoder = AutoModel.from_pretrained(roberta_type, output_hidden_states=True)
         if CUDA:

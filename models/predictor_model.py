@@ -18,9 +18,9 @@ class ECIRobertaJointTask(nn.Module):
                 negative_slope=0.2, drop_rate=0.5, task_weights=None, kg_emb_dim=300, lstm=False):
         super().__init__()
         
-        if path.exists("./pretrained_models/models/{}".format(roberta_type)):
+        if path.exists("/vinai/hieumdt/pretrained_models/models/{}".format(roberta_type)):
             print("Loading pretrain model from local ......")
-            self.roberta = RobertaModel.from_pretrained("./pretrained_models/models/{}".format(roberta_type), output_hidden_states=True)
+            self.roberta = RobertaModel.from_pretrained("/vinai/hieumdt/pretrained_models/models/{}".format(roberta_type), output_hidden_states=True)
         else:
             print("Loading pretrain model ......")
             self.roberta = RobertaModel.from_pretrained(roberta_type, output_hidden_states=True)

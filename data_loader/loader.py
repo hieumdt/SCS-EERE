@@ -9,7 +9,7 @@ import pickle
 import os
 import tqdm
 from itertools import combinations
-from data_loader.reader import tbd_tml_reader, tdd_tml_reader, tml_reader, tsvx_reader
+from data_loader.reader import mulerx_tsvx_reader, tbd_tml_reader, tdd_tml_reader, tml_reader, tsvx_reader
 from utils.tools import create_target, padding, pos_to_id
 from sklearn.model_selection import train_test_split
 from utils.SentenceEncoder import SentenceEncoder
@@ -26,6 +26,8 @@ class Reader(object):
             return tsvx_reader(dir_name, file_name)
         elif self.type == 'tml':
             return tml_reader(dir_name, file_name)
+        elif self.type == 'mulerx':
+            return mulerx_tsvx_reader(dir_name, file_name)
         elif self.type == 'tbd_tml':
             return tbd_tml_reader(dir_name, file_name)
         elif self.type == 'tdd_man':
@@ -77,10 +79,12 @@ def load_dataset(dir_name, type):
                 corpus.append(my_dict)
     return corpus
 
+global_sent_encoder = SentenceEncoder('roberta-base')
+global_c2v = C2V('./datasets/numberbatch-en-19.08.txt')
 
-def loader(dataset, min_ns):
-    sent_encoder = SentenceEncoder('roberta-base')
-    c2v = C2V('./datasets/numberbatch-en-19.08.txt')
+def loader(dataset, min_ns, file_type=None, file_path=None, label_type=None):
+    sent_encoder = global_sent_encoder
+    c2v = global_c2v
     def get_data_point(my_dict, flag):
         data = []
         eids = my_dict['event_dict'].keys()
@@ -596,8 +600,25 @@ def loader(dataset, min_ns):
         print("Test_size: {}".format(len(test_set) + len(test_short)))
         print("Validate_size: {}".format(len(validate_set) + len(validate_short)))
 
-        del sent_encoder
-        del c2v
-        gc.collect()
+    if dataset=='infer':
+        reader = Reader(file_type)
+        print(f'Reading file {file_path} ....')
+        my_dict = reader.read('', file_path)
+        data = get_data_point(my_dict, label_type)
+        for item in data:
+            if len(item[-4]) >= min_ns:
+                test_set.append(item)
+            else:
+                test_short.append(item)
+        print("Train_size: {}".format(len(train_set)))
+        print("Test_size: {}".format(len(test_set)))
+        print("Validate_size: {}".format(len(validate_set)))
+        print("Train_size: {}".format(len(train_short)))
+        print("Test_size: {}".format(len(test_short)))
+        print("Validate_size: {}".format(len(validate_short)))
+
+    del sent_encoder
+    del c2v
+    gc.collect()
 
     return train_set, test_set, validate_set, train_short, test_short, validate_short

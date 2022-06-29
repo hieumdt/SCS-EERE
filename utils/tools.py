@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 import numpy as np
 np.random.seed(1741)
 import torch
@@ -10,7 +11,7 @@ from transformers import RobertaTokenizer
 from utils.constant import *
 
 
-tokenizer = RobertaTokenizer.from_pretrained('./tokenizer/roberta-base', unk_token='<unk>')
+tokenizer = RobertaTokenizer.from_pretrained('/vinai/hieumdt/pretrained_models/tokenizers/roberta-base', unk_token='<unk>')
 nlp = spacy.load("en_core_web_sm")
 
 
@@ -64,19 +65,18 @@ def RoBERTa_list(content, token_list = None, token_span_SENT = None):
     else:
         return roberta_subword_to_ID, roberta_subwords, roberta_subword_span, -1
 
-def tokenized_to_origin_span(text, token_list):
+def tokenized_to_origin_span(text: str, token_list: List[str]):
     token_span = []
     pointer = 0
     for token in token_list:
-        while True:
-            if token[0] == text[pointer]:
-                start = pointer
-                end = start + len(token) - 1
-                pointer = end + 1
-                break
-            else:
-                pointer += 1
-        token_span.append([start, end])
+        start = text.find(token, pointer)
+        if start != -1:
+            end = start + len(token) - 1
+            pointer = end + 1
+            token_span.append([start, end])
+            assert text[start: end+1] == token, f"token: {token} - text:{text}"
+        else:
+            token_span.append([-100, -100])
     return token_span
 
 def sent_id_lookup(my_dict, start_char, end_char = None):
@@ -187,8 +187,8 @@ def make_predictor_input(x_sent, y_sent, x_sent_pos, y_sent_pos, x_sent_id, y_se
                                                                 ctx[i], selected_ctx, doc_id[i])
         pos_augment, x_pos_possition_new, y_pos_possition_new = augment_target(x_sent_pos[i], y_sent_pos[i], x_sent_id[i], y_sent_id[i], 
                                                                             x_possition[i], y_possition[i], pos_ctx[i], selected_ctx, doc_id[i], is_pos=True)
-        assert x_possition_new == x_pos_possition_new
-        assert y_possition_new == y_pos_possition_new
+        # assert x_possition_new == x_pos_possition_new
+        # assert y_possition_new == y_pos_possition_new
         if is_test == False:
             augment = word_dropout(augment, [x_possition_new, y_possition_new], dropout_rate=dropout_rate)
             pos_augment = word_dropout(pos_augment, [x_possition_new, y_possition_new], is_word=False, dropout_rate=dropout_rate)
@@ -301,3 +301,11 @@ def processing_vague(logits, threshold, vague_id):
         predicts.append(predict)
     # print(predicts)
     return predicts
+
+
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+
+def collate_fn(batch):
+    return tuple(zip(*batch))
