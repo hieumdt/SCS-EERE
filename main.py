@@ -145,7 +145,7 @@ if __name__ == '__main__':
     parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
     parser.add_argument('--seed', help='SEED', default=1741, type=int)
     parser.add_argument('--dataset', help="Name of dataset", action='append', required=True)
-    parser.add_argument('--roberta_type', help="base or large", default='roberta-base', type=str)
+    parser.add_argument('--roberta_type', help="base or large", default='roberta-large', type=str)
     parser.add_argument('--best_path', help="Path for save model", type=str)
     parser.add_argument('--log_file', help="Path of log file", type=str)
     parser.add_argument('--bs', help='batch size', default=16, type=int)
